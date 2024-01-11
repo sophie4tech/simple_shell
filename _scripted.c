@@ -1,8 +1,8 @@
 #include "shell.h"
 /**
- * _scripted - runs the command from script
+ * non_interactive - runs the command from script
  */
-void _scripted(void)
+void non_interactive(void)
 {
 	char *input;
 

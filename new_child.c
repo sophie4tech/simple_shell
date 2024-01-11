@@ -15,7 +15,7 @@ void execve_command(char *command, char *args[])
 	}
 	if (pid == 0)
 	{
-		if (execv(comman, args) == -1)
+		if (execv(command, args) == -1)
 		{
 			perror("Error in command execution");
 			exit(EXIT_FAILURE);

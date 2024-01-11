@@ -6,27 +6,28 @@
  * @stream: pointer to file to read from
  * Return: characters read, or -1 on failure
  */
-ssize _readline(char **lineptr, size_t *n, FILE *stream)
+ssize_t _readline(char **lineptr, size_t *n, FILE *stream)
 {
-	if (!(lineptr || n || stream))
+	int character;
+	size_t x = 0;
+
+	if (lineptr == NULL || n == NULL || stream == NULL)
 	{
 		return (-1);
 	}
 
-	if (!*lineptr || * n == 0)
+	if (*lineptr == NULL || *n == 0)
 	{
 		*n = SIZE;
 		*lineptr = malloc(*n);
-		if (!*lineptr)
+		if (*lineptr == NULL)
+		{
 			return (-1);
+		}
 	}
-
-	size_t y = 0;
-	int character;
-
 	while ((character = fgetc(stream)) != EOF && character != '\n')
 	{
-		if (y >= *n - 1)
+		if (x >= *n - 1)
 		{
 			*n *= 2;
 			*lineptr = realloc(*lineptr, *n);
@@ -35,16 +36,17 @@ ssize _readline(char **lineptr, size_t *n, FILE *stream)
 				return (-1);
 			}
 		}
-		(*lineptr)[y++] = (char)character;
-		if (charater == '\n')
+		(*lineptr)[x++] = (char)character;
+		if (character == '\n')
 		{
 			break;
 		}
 	}
-	(*lineptr)[y] = '\0';
-	if (y == 0)
+	(*lineptr)[x] = '\0';
+	if (x == 0)
 	{
 		return (-1);
 	}
+	return (x);
 }
 	
